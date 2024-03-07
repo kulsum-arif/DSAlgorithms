@@ -1,0 +1,14 @@
+
+
+
+
+123456 -> 777
+1228 -> 94
+122! -> 14
+
+-> input string
+-> out int
+-> add first and last and place in first pos
+-> if non-digit, then translate 0
+
+
