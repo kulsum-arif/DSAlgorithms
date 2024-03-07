@@ -9,7 +9,46 @@ class BalanceBrackets {
   //{(a(a))} => true
   //[](){()}(()) => true
   //{(}) => false
-  boolean isBalanced(String s) {
+  boolean isBalanced(String s){
+    char[] sChars = s.toCharArray();
+    Stack<Character> stack = new Stack<>();
+    for(int i=0; i<sChars.length; i++){
+
+      // If start char push in stack
+      if(isStartBrace(sChars[i])){
+        stack.push(sChars[i]);
+      }
+
+      // If end char, pop from stack and determine match
+      if (isEndBrace(sChars[i])){
+        char start = stack.peek();
+        if ((sChars[i] == '}' && start != '{') ||
+            (sChars[i] == ']' && start != '[') ||
+            (sChars[i] == ')' && start != '(')){
+          return false;
+        }
+        stack.pop();
+      }
+    }
+
+    return stack.size()==0;
+  }
+
+  boolean isStartBrace(char c){
+    if (c =='{' || c=='(' || c=='[')
+      return true;
+
+    return  false;
+  }
+
+  boolean isEndBrace(char c){
+    if (c =='}' || c==')' || c==']')
+      return true;
+
+    return  false;
+  }
+
+  boolean isBalanced_x(String s) {
     // if empty return true
     if(s.length()<=0)
       return true;
@@ -88,6 +127,6 @@ class BalanceBrackets {
   }
 
   public static void main(String[] args) {
-    new Sort().run();
+    new BalanceBrackets().run();
   }
 }
