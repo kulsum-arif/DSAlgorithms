@@ -10,41 +10,51 @@ class BalanceBrackets {
   //[](){()}(()) => true
   //{(}) => false
   boolean isBalanced(String s){
-    char[] sChars = s.toCharArray();
-    Stack<Character> stack = new Stack<>();
-    for(int i=0; i<sChars.length; i++){
-
-      // If start char push in stack
-      if(isStartBrace(sChars[i])){
-        stack.push(sChars[i]);
-      }
-
-      // If end char, pop from stack and determine match
-      if (isEndBrace(sChars[i])){
-        char start = stack.peek();
-        if ((sChars[i] == '}' && start != '{') ||
-            (sChars[i] == ']' && start != '[') ||
-            (sChars[i] == ')' && start != '(')){
-          return false;
-        }
-        stack.pop();
-      }
+    // Some validations
+    if (s ==null || s.length() <=1){
+      return false;
     }
 
-    return stack.size()==0;
-  }
-
-  boolean isStartBrace(char c){
-    if (c =='{' || c=='(' || c=='[')
+    Stack<Character> braceList = new Stack<>();
+    for(char c: s.toCharArray()){
+      if(startBrace(c)){
+        braceList.push(c);
+      }
+      else if(endBrace(c)){
+        char prevStartBrace = braceList.peek();
+        System.out.println(c + "----" + prevStartBrace);
+        // If matching then pop and continue
+        if ((prevStartBrace =='{' && c=='}') ||
+            (prevStartBrace =='(' && c==')') ||
+            (prevStartBrace =='[' && c==']')){
+          braceList.pop();
+        }
+        else {
+          System.out.println("not true");
+          return false;
+        }
+      }
+    }
+    if (braceList.size() ==0)
       return true;
 
+    return false;
+  }
+
+  private boolean startBrace(char c){
+
+    if ( c=='(' || c=='{' || c=='['){
+      return true;
+    }
     return  false;
   }
 
-  boolean isEndBrace(char c){
-    if (c =='}' || c==')' || c==']')
-      return true;
 
+  private boolean endBrace(char c){
+
+    if ( c==')' || c=='}' || c==']'){
+      return true;
+    }
     return  false;
   }
 
